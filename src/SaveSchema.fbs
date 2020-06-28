@@ -7,42 +7,43 @@ namespace N2S.FileFormat;
 file_identifier "N2SM";
 file_extension "N2SMAP";
 
-enum TileFlag : ubyte (bit_flags) { None = 0, Ground = 1, Solid = 2, Hole = 4 } 
+
 enum EntityType : short {Checkpoint = 0, Enemy = 1 }
+enum MapFlags : ubyte (bit_flags) { None = 0, Ground = 1, Solid = 2, Hole = 3}
+
 
 
 table TileData {
-	pos:Vec2 (id: 0);
-	tile_sprite:ushort (id: 1);
-	tile_flags:TileFlag (id: 2);
+	pos:Vec2Int (id: 0);
+	tile_sprite:uint = 0 (id: 1);
 } 
 
 table TilemapData {
-	pos:Vec2 (id: 0);
-	tiles:[TileData] (id: 1);
+	tiles:[TileData] (id: 0);
+	map_flags:MapFlags = 0 (id: 1);
 }
 
 table EntityData {
-	pos:Vec2 (id: 0);
+	pos:Vec2Int (id: 0);
 	type:EntityType (id: 1);
-	id:ushort (id: 2);
+	id:int (id: 2);
 }
 
 table MapSettings {
 		map_name:string (id: 0);
 		author_name:string (id: 1);
-		cell_size:float (id: 2);
-		chunk_size:ushort (id: 3);
-		segment_size:Vec2 (id: 4);
+		chunk_size:float (id: 2);
 }
 
 table Map {
 	game_version:string (id: 0);
 	settings:MapSettings (id: 1);
-
-	base_layer:[TilemapData] (id: 2);
-	detail_layer:[TilemapData] (id: 3);
-	entity_layer:[EntityData] (id: 4);
+	
+	//Stores all the tilemaps. I.e., base layer, wall layer, etc.
+	tile_layers:[TilemapData] (id:2);
+	
+	//Stores all entity information
+	entity_layer:[EntityData] (id: 3);
 }
 
 root_type Map;
