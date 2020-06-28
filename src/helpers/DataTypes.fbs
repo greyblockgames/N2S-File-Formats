@@ -4,3 +4,9 @@ struct Vec2Int {
 	x:int;
 	y:int;
 }
+
+struct Vec3Int {
+	x:int;
+	y:int;
+	z:int;
+}

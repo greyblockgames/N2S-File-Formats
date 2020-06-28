@@ -19,8 +19,10 @@ table TileData {
 } 
 
 table TilemapData {
-	tiles:[TileData] (id: 0);
-	map_flags:MapFlags = 0 (id: 1);
+	map_flags:MapFlags = 0 (id: 0);
+	cell_bounds:Vec3Int (id: 1);
+	tiles:[TileData] (id: 2);
+	
 }
 
 table EntityData {
